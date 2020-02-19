@@ -1,24 +1,28 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { useSelector, useDispatch } from 'react-redux';
+
+import { pending, loading } from 'reducers/app.js';
 
 function App() {
+  const { isPending, isLoading } = useSelector(state => ({
+    isPending: state.app.isPending,
+    isLoading: state.app.isLoading
+  }));
+
+  const dispatch = useDispatch();
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <p>Pending status: {isPending ? 'Pending' : 'Done'}</p>
+      <p>Loading status: {isLoading ? 'Loading' : 'Done'}</p>
+      <button type="button" onClick={() => dispatch(pending())}>
+        Make Pending Request
+      </button>
+      <br />
+      <br />
+      <button type="button" onClick={() => dispatch(loading())}>
+        Make Loading Request
+      </button>
     </div>
   );
 }
